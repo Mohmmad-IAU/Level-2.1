@@ -5,8 +5,10 @@ import '../models/note_model.dart';
 class NoteApp {
   List<Note> notes = [];
 
-  static const String header = "╔══════════════════════════════════════════════╗";
-  static const String footer = "╚══════════════════════════════════════════════╝";
+  static const int boxWidth = 50;
+  final String horizontalLine = '═' * (boxWidth - 2);
+  final String header = "╔${'═' * (boxWidth - 2)}╗";
+  final String footer = "╚${'═' * (boxWidth - 2)}╝";
 
   /// Creates a new note and adds it to the list of notes.
   void createNote() {
@@ -42,7 +44,7 @@ class NoteApp {
       print("No notes to display.");
     } else {
       for (var note in notes) {
-        print("Title: ${note.title}\nContents: ${note.content}\n");
+        _printNoteContent(note.title, note.content);
       }
     }
   }
@@ -110,7 +112,7 @@ class NoteApp {
     } else {
       print("Matching notes:");
       for (var note in matchingNotes) {
-        print("Title: ${note.title}\nContents: ${note.content}\n");
+        _printNoteContent(note.title, note.content);
       }
     }
   }
@@ -138,7 +140,52 @@ class NoteApp {
   /// Helper method to print header with a title.
   void _printHeader(String title) {
     print(header);
-    print("║ ${title.padRight(46)} ║");
+    print("║ ${_centerText(title, boxWidth - 4)} ║");
     print(footer);
+  }
+
+  /// Helper method to print note content within a box.
+  void _printNoteContent(String title, String content) {
+    print("╔${'═' * (boxWidth - 2)}╗");
+    print("║ ${_centerText(title, boxWidth - 4)} ║");
+    print("╠${'═' * (boxWidth - 2)}╣");
+    print("║ Content:".padRight(boxWidth - 1) + "║");
+    _printWrappedContent(content);
+    print("╚${'═' * (boxWidth - 2)}╝");
+  }
+
+  /// Helper method to wrap and print content within the box width.
+  void _printWrappedContent(String content) {
+    final int contentWidth = boxWidth - 4;
+    final lines = _wrapText(content, contentWidth);
+    for (var line in lines) {
+      print("║ ${line.padRight(contentWidth)} ║");
+    }
+  }
+
+  /// Helper method to wrap text within a specific width.
+  List<String> _wrapText(String text, int width) {
+    final List<String> lines = [];
+    while (text.isNotEmpty) {
+      if (text.length <= width) {
+        lines.add(text);
+        break;
+      } else {
+        int spaceIndex = text.lastIndexOf(' ', width);
+        if (spaceIndex == -1) {
+          spaceIndex = width;
+        }
+        lines.add(text.substring(0, spaceIndex));
+        text = text.substring(spaceIndex).trimLeft();
+      }
+    }
+    return lines;
+  }
+
+  /// Helper method to center text within a given width.
+  String _centerText(String text, int width) {
+    final int padding = (width - text.length) ~/ 2;
+    final String paddingStr = ' ' * padding;
+    return paddingStr + text + paddingStr.padRight(width - text.length - padding);
   }
 }

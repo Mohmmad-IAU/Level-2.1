@@ -10,13 +10,13 @@ void main() {
       print("╔═════════════════════════════════════════════════════════╗");
       print("║                   Welcome to NoteApp                    ║");
       print("╠═════════════════════════════════════════════════════════╣");
-      print("║ 1. Create a note                                        ║");
-      print("║ 2. Edit a note                                          ║");
-      print("║ 3. Delete a note                                        ║");
-      print("║ 4. Search for a note                                    ║");
-      print("║ 5. Display all notes                                    ║");
-      print("║ 6. Exit                                                 ║");
-      print("╚═════════════════════════════════════════════════════════╝");
+      print("║                    1. Create a note                     ║");
+      print("║                    2. Edit a note                       ║");
+      print("║                    3. Delete a note                     ║");
+      print("║                    4. Search for a note                 ║");
+      print("║                    5. Display all notes                 ║");
+      print("║                    6. Exit                              ║");
+      print("╚═════════════════════════════════════════════════════════╝\n");
       stdout.write("Enter your choice: ");
 
       final choice = int.tryParse(stdin.readLineSync() ?? "") ?? -1;
@@ -38,7 +38,7 @@ void main() {
           noteApp.displayNotes();
           break;
         case 6:
-          print("Exiting the program.");
+          print("\nExiting the program.");
           exit(0);
         default:
           print("Invalid choice. Please choose a number between 1 and 6.");
