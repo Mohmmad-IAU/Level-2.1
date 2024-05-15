@@ -7,26 +7,16 @@ void main() {
 
   while (true) {
     try {
-      print(
-          "╔═════════════════════════════════════════════════════════╗");
-      print(
-          "║                   Welcome to NoteApp                    ║");
-      print(
-          "╠═════════════════════════════════════════════════════════╣");
-      print(
-          "║ 1. Create a note                                        ║");
-      print(
-          "║ 2. Edit a note                                          ║");
-      print(
-          "║ 3. Delete a note                                        ║");
-      print(
-          "║ 4. Search for a note                                    ║");
-      print(
-          "║ 5. Display all notes                                    ║");
-      print(
-          "║ 6. Exit                                                 ║");
-      print(
-          "╚═════════════════════════════════════════════════════════╝");
+      print("╔═════════════════════════════════════════════════════════╗");
+      print("║                   Welcome to NoteApp                    ║");
+      print("╠═════════════════════════════════════════════════════════╣");
+      print("║ 1. Create a note                                        ║");
+      print("║ 2. Edit a note                                          ║");
+      print("║ 3. Delete a note                                        ║");
+      print("║ 4. Search for a note                                    ║");
+      print("║ 5. Display all notes                                    ║");
+      print("║ 6. Exit                                                 ║");
+      print("╚═════════════════════════════════════════════════════════╝");
       stdout.write("Enter your choice: ");
 
       final choice = int.tryParse(stdin.readLineSync() ?? "") ?? -1;

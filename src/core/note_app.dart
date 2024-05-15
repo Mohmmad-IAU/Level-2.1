@@ -5,11 +5,12 @@ import '../models/note_model.dart';
 class NoteApp {
   List<Note> notes = [];
 
+  static const String header = "╔══════════════════════════════════════════════╗";
+  static const String footer = "╚══════════════════════════════════════════════╝";
+
   /// Creates a new note and adds it to the list of notes.
   void createNote() {
-    print("╔══════════════════════════════════════════════╗");
-    print("║               Create a New Note              ║");
-    print("╚══════════════════════════════════════════════╝");
+    _printHeader("Create a New Note");
 
     final title = _getInput("Enter the note title: ");
     if (title.isEmpty) {
@@ -35,9 +36,7 @@ class NoteApp {
 
   /// Displays all notes in the list.
   void displayNotes() {
-    print("╔══════════════════════════════════════════════╗");
-    print("║                All Notes                     ║");
-    print("╚══════════════════════════════════════════════╝");
+    _printHeader("All Notes");
 
     if (notes.isEmpty) {
       print("No notes to display.");
@@ -50,9 +49,7 @@ class NoteApp {
 
   /// Edits the title and content of a note.
   void editNote() {
-    print("╔══════════════════════════════════════════════╗");
-    print("║                 Edit Note                    ║");
-    print("╚══════════════════════════════════════════════╝");
+    _printHeader("Edit Note");
 
     if (notes.isEmpty) {
       print("No notes to edit.");
@@ -76,9 +73,7 @@ class NoteApp {
 
   /// Deletes a specific note from the list.
   void deleteNote() {
-    print("╔══════════════════════════════════════════════╗");
-    print("║               Delete Note                    ║");
-    print("╚══════════════════════════════════════════════╝");
+    _printHeader("Delete Note");
 
     if (notes.isEmpty) {
       print("No notes to delete.");
@@ -99,9 +94,7 @@ class NoteApp {
 
   /// Searches for a specific note by title or content.
   void searchNotes() {
-    print("╔══════════════════════════════════════════════╗");
-    print("║              Search Notes                    ║");
-    print("╚══════════════════════════════════════════════╝");
+    _printHeader("Search Notes");
 
     if (notes.isEmpty) {
       print("No notes to search.");
@@ -140,5 +133,12 @@ class NoteApp {
     } catch (e) {
       return null;
     }
+  }
+
+  /// Helper method to print header with a title.
+  void _printHeader(String title) {
+    print(header);
+    print("║ ${title.padRight(46)} ║");
+    print(footer);
   }
 }
