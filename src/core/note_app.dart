@@ -1,115 +1,124 @@
 import 'dart:io';
 import '../models/note_model.dart';
 
-// Manage operations of the program (create, edit, delete, search, display).
-class NoteManager {
+/// Manages the operations of the note-taking program (create, edit, delete, search, display).
+class note_app {
   List<Note> notes = [];
 
-  // Creates a new note and adds it to the list of notes.
+  /// Creates a new note and adds it to the list of notes.
   void createNote() {
-    String title, content;
+    final title = _getInput("Enter the note title: ");
+    if (title.isEmpty) {
+      print("Note title cannot be empty. Please provide a title.\n");
+      return;
+    }
 
-    do {
-      print("Enter the note title: ");
-      title = stdin.readLineSync()?.trim() ?? "";
-
-      if (title.isEmpty) {
-        print("Note title cannot be empty. Please provide a title.\n");
-      }
-    } while (title.isEmpty);
-
-    // Check if a note with the same title already exists
-    if (notes.any((note) => note.title == title)) {
+    if (_noteExists(title)) {
       print("A note with the title '$title' already exists. Please choose a different title.\n");
       return;
     }
 
-    print("Enter the note content: ");
-    content = stdin.readLineSync() ?? "None";
+    final content = _getInput("Enter the note content: ");
+    final newNote = Note(
+      title: title,
+      content: content.isEmpty ? "None" : content,
+    );
 
-    Note newNote = Note(title: title, content: content);
     notes.add(newNote);
-
     print("The note is successfully created!\n");
   }
 
-  // Display all notes in the list.
-  void displayNote() {
+  /// Displays all notes in the list.
+  void displayNotes() {
     if (notes.isEmpty) {
-      print("Nothing to display!");
+      print("No notes to display.");
     } else {
-      print("All notes: ");
+      print("All notes:");
       for (var note in notes) {
         print("Title: ${note.title}\nContents: ${note.content}\n");
       }
     }
   }
 
-  // Edit the title and content of a note.
+  /// Edits the title and content of a note.
   void editNote() {
     if (notes.isEmpty) {
-      print("Nothing to edit!");
+      print("No notes to edit.");
       return;
     }
-    print("Enter the title of the note to edit: ");
-    String newTitle = stdin.readLineSync() ?? "None";
-    for (var note in notes) {
-      if (note.title == newTitle) {
-        print("Enter a new title: ");
-        note.title = stdin.readLineSync() ?? "None";
 
-        print("Enter new content: ");
-        note.content = stdin.readLineSync() ?? "None";
-
-        print("The note is successfully edited!");
-        return;
-      }
+    final title = _getInput("Enter the title of the note to edit: ");
+    final note = _findNoteByTitle(title);
+    if (note == null) {
+      print("Note with title '$title' not found.\n");
+      return;
     }
-    print("Note with title '$newTitle' not found.\n");
+
+    final newTitle = _getInput("Enter a new title: ");
+    final newContent = _getInput("Enter new content: ");
+    note.title = newTitle.isEmpty ? note.title : newTitle;
+    note.content = newContent.isEmpty ? note.content : newContent;
+
+    print("The note is successfully edited!");
   }
 
-  // Delete a specific note from the list.
+  /// Deletes a specific note from the list.
   void deleteNote() {
     if (notes.isEmpty) {
-      print("Nothing to delete!");
+      print("No notes to delete.");
       return;
     }
 
-    print("Enter the title of the note to delete:");
-    var noteToDeleteTitle = stdin.readLineSync();
+    final title = _getInput("Enter the title of the note to delete: ");
+    final note = _findNoteByTitle(title);
 
-    var noteIndexToDelete =
-        notes.indexWhere((note) => note.title == noteToDeleteTitle);
-
-    if (noteIndexToDelete == -1) {
-      print("Note with title '$noteToDeleteTitle' not found!");
-    } else {
-      var deletedNote = notes.removeAt(noteIndexToDelete);
-      print("Note deleted: ${deletedNote.title}");
+    if (note == null) {
+      print("Note with title '$title' not found.");
+      return;
     }
+
+    notes.remove(note);
+    print("Note deleted: ${note.title}");
   }
 
-  // Search for a specific note by title or content.
-  void searchNote() {
+  /// Searches for a specific note by title or content.
+  void searchNotes() {
     if (notes.isEmpty) {
-      print("No notes found!");
+      print("No notes to search.");
       return;
     }
 
-    print("Enter the title or content of the note to search:");
-    var searchTitleOrContent = stdin.readLineSync() ?? "None";
-
-    var matchingNotes = notes.where((note) =>
-        note.title.contains(searchTitleOrContent) ||
-        note.content.contains(searchTitleOrContent));
+    final query = _getInput("Enter the title or content of the note to search: ");
+    final matchingNotes = notes.where((note) =>
+        note.title.contains(query) || note.content.contains(query)).toList();
 
     if (matchingNotes.isEmpty) {
-      print("No matching notes found!");
+      print("No matching notes found.");
     } else {
-      print("Matching notes: ");
+      print("Matching notes:");
       for (var note in matchingNotes) {
         print("Title: ${note.title}\nContents: ${note.content}\n");
       }
+    }
+  }
+
+  /// Helper method to get input from the user.
+  String _getInput(String prompt) {
+    stdout.write(prompt);
+    return stdin.readLineSync()?.trim() ?? "";
+  }
+
+  /// Helper method to check if a note with the given title already exists.
+  bool _noteExists(String title) {
+    return notes.any((note) => note.title == title);
+  }
+
+  /// Helper method to find a note by its title.
+  Note? _findNoteByTitle(String title) {
+    try {
+      return notes.firstWhere((note) => note.title == title);
+    } catch (e) {
+      return null;
     }
   }
 }

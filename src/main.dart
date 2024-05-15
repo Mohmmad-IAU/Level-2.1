@@ -1,45 +1,49 @@
 import 'dart:io';
 import 'core/note_app.dart';
 
-// Note project
-void main(List<String> args) {
-  NoteManager userMenu = NoteManager();
+/// Entry point for the note-taking application.
+void main() {
+  final note_app = note_app();
 
-  do {
+  while (true) {
     try {
-      print("**************Welcome to NoteApp**************");
+      print("************** Welcome to NoteApp **************");
       print("1. Create a note");
       print("2. Edit a note");
       print("3. Delete a note");
       print("4. Search for a note");
-      print("5. Display all");
-      print("6. Exit\n");
+      print("5. Display all notes");
+      print("6. Exit");
       stdout.write("Enter your choice: ");
-      String userInput = stdin.readLineSync() ?? "None";
-      int choice = int.parse(userInput);
+
+      final choice = int.tryParse(stdin.readLineSync() ?? "") ?? -1;
 
       switch (choice) {
         case 1:
-          userMenu.createNote();
+          note_app.createNote();
           break;
         case 2:
-          userMenu.editNote();
+          note_app.editNote();
           break;
         case 3:
-          userMenu.deleteNote();
+          note_app.deleteNote();
           break;
         case 4:
-          userMenu.searchNote();
+          note_app.searchNotes();
           break;
         case 5:
-          userMenu.displayNote();
+          note_app.displayNotes();
           break;
         case 6:
-          print("Exiting the program.\n");
-          return;
+          print("Exiting the program.");
+          exit(0);
         default:
-          print("Invalid number, please choose 1 to 6 only!\n");
-          break;
+          print("Invalid choice. Please choose a number between 1 and 6.");
       }
-  } while (true);
+    } on FormatException {
+      print("Invalid input. Please enter a valid number.");
+    } catch (e) {
+      print("An unexpected error occurred: $e");
+    }
+  }
 }
