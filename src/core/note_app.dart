@@ -7,6 +7,10 @@ class NoteApp {
 
   /// Creates a new note and adds it to the list of notes.
   void createNote() {
+    print("╔══════════════════════════════════════════════╗");
+    print("║               Create a New Note              ║");
+    print("╚══════════════════════════════════════════════╝");
+
     final title = _getInput("Enter the note title: ");
     if (title.isEmpty) {
       print("Note title cannot be empty. Please provide a title.\n");
@@ -14,7 +18,8 @@ class NoteApp {
     }
 
     if (_noteExists(title)) {
-      print("A note with the title '$title' already exists. Please choose a different title.\n");
+      print(
+          "A note with the title '$title' already exists. Please choose a different title.\n");
       return;
     }
 
@@ -30,10 +35,13 @@ class NoteApp {
 
   /// Displays all notes in the list.
   void displayNotes() {
+    print("╔══════════════════════════════════════════════╗");
+    print("║                All Notes                     ║");
+    print("╚══════════════════════════════════════════════╝");
+
     if (notes.isEmpty) {
       print("No notes to display.");
     } else {
-      print("All notes:");
       for (var note in notes) {
         print("Title: ${note.title}\nContents: ${note.content}\n");
       }
@@ -42,6 +50,10 @@ class NoteApp {
 
   /// Edits the title and content of a note.
   void editNote() {
+    print("╔══════════════════════════════════════════════╗");
+    print("║                 Edit Note                    ║");
+    print("╚══════════════════════════════════════════════╝");
+
     if (notes.isEmpty) {
       print("No notes to edit.");
       return;
@@ -64,6 +76,10 @@ class NoteApp {
 
   /// Deletes a specific note from the list.
   void deleteNote() {
+    print("╔══════════════════════════════════════════════╗");
+    print("║               Delete Note                    ║");
+    print("╚══════════════════════════════════════════════╝");
+
     if (notes.isEmpty) {
       print("No notes to delete.");
       return;
@@ -83,6 +99,10 @@ class NoteApp {
 
   /// Searches for a specific note by title or content.
   void searchNotes() {
+    print("╔══════════════════════════════════════════════╗");
+    print("║              Search Notes                    ║");
+    print("╚══════════════════════════════════════════════╝");
+
     if (notes.isEmpty) {
       print("No notes to search.");
       return;
