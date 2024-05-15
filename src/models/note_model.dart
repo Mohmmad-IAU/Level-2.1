@@ -1,2 +1,9 @@
-//TODO: Define a note model class
-class NoteModel {}
+class Note {
+  late String title;
+  late String content;
+
+  Note({
+    required this.title,
+    required this.content,
+  });
+}
