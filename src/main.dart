@@ -3,7 +3,7 @@ import 'core/note_app.dart';
 
 /// Entry point for the note-taking application.
 void main() {
-  final note_app = note_app();
+  final noteApp = NoteApp();
 
   while (true) {
     try {
@@ -20,19 +20,19 @@ void main() {
 
       switch (choice) {
         case 1:
-          note_app.createNote();
+          noteApp.createNote();
           break;
         case 2:
-          note_app.editNote();
+          noteApp.editNote();
           break;
         case 3:
-          note_app.deleteNote();
+          noteApp.deleteNote();
           break;
         case 4:
-          note_app.searchNotes();
+          noteApp.searchNotes();
           break;
         case 5:
-          note_app.displayNotes();
+          noteApp.displayNotes();
           break;
         case 6:
           print("Exiting the program.");

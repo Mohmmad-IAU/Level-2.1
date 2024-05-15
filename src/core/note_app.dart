@@ -2,7 +2,7 @@ import 'dart:io';
 import '../models/note_model.dart';
 
 /// Manages the operations of the note-taking program (create, edit, delete, search, display).
-class note_app {
+class NoteApp {
   List<Note> notes = [];
 
   /// Creates a new note and adds it to the list of notes.
